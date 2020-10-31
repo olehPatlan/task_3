@@ -11,7 +11,8 @@ public class Encoder {
         StringBuilder result = new StringBuilder();
         char prevChar = '-';
         for (byte mByte : lineBytes) {
-            String binaryString = numberToBinaryString(mByte);
+            // 8 - amount of symbols in binary string ASCII 2^7 codes
+            String binaryString = numberToBinaryString(mByte,8);
             for (int i = 0; i < binaryString.length(); i++) {
                 char curChar = binaryString.charAt(i);
                 if (curChar == prevChar) {
@@ -30,12 +31,11 @@ public class Encoder {
         return result.toString().trim();
     }
 
-    private static String numberToBinaryString(int input) {
+    private static String numberToBinaryString(int input,int length) {
         StringBuilder binaryString = new StringBuilder(Integer.toBinaryString(input));
-        // 8 - amount of symbols in binary string ASCII 2^7 codes
-        if (binaryString.length() < 8) {
+        if (binaryString.length() < length) {
             StringBuilder newBinaryString = new StringBuilder();
-            for (int i = 0; i < 8 - binaryString.length(); i++) {
+            for (int i = 0; i < length - binaryString.length(); i++) {
                 newBinaryString.append("0");
             }
             return newBinaryString.append(binaryString).toString();
